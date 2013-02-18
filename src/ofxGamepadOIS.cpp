@@ -7,6 +7,8 @@
  *
  */
 
+#ifdef USE_OIS
+
 #include "ofxGamepadOIS.h"
 
 using namespace OIS;
@@ -102,3 +104,5 @@ void ofxGamepadOIS::rumble(float level)
 		forceFeedback->setMasterGain(level);
 	}
 }
+
+#endif // USE_OIS

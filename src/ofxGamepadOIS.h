@@ -10,6 +10,8 @@
 #ifndef _CLASS_ofxGamepadOIS_
 #define _CLASS_ofxGamepadOIS_
 
+#ifdef USE_OIS
+
 #include "OIS.h"
 #include "ofxGamepad.h"
 
@@ -34,5 +36,7 @@ private:
 	OIS::ForceFeedback* forceFeedback;
 	bool bFFFound;
 };
+
+#endif // USE_OIS
 
 #endif

@@ -12,13 +12,17 @@
 #include "ofxGamepadLinux.h"
 #endif
 
+#if defined(TARGET_ANDROID) && ! defined(USE_OIS)
+#include "ofxGamepadAndroid.h"
+#endif
+
 #ifdef USE_OIS
 #include "OIS.h"
 #include "ofxGamepadOIS.h"
 typedef std::vector< ofPtr<ofxGamepadOIS> > gamepadList;
 #else
 typedef std::vector< ofPtr<ofxGamepad> > gamepadList;
-#endif;
+#endif
 
 
 class ofxGamepadHandler: public ofThread {

@@ -4,6 +4,8 @@
 #include "ofMain.h"
 #include "ofxGamepadConfigs.h"
 
+#include <map>
+
 class ofxGamepad;
 
 class ofxGamepadThreshold{

@@ -129,6 +129,7 @@ void ofxGamepadHandler::updatePadList() {
 			}
 		}
 	}
+#elif defined(TARGET_ANDROID)
 #else
 	ofLog(OF_LOG_ERROR, "ofxGamepad says: sorry, looks like your system is not supported...");
 #endif
