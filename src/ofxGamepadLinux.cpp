@@ -30,6 +30,7 @@ ofxGamepadLinux::ofxGamepadLinux(string f):ofxGamepad() {
 		} else {
 			name = name_c_str;
 		}
+		setName(name);
 
 		fcntl( fd, F_SETFL, O_NONBLOCK );
 	}

@@ -11,7 +11,7 @@ class ofxGamepad;
 class ofxGamepadThreshold{
 public:
 	ofxGamepadThreshold(){
-		min = max = 0.05;
+		min = max = 0.3;//0.05;
 	}
 	float min;
 	float max;
@@ -45,6 +45,7 @@ public:
 	ofxGamepad();
 	~ofxGamepad();
 	virtual void update() {};
+	void reset();
 
 	void buttonReleased(int button);
 	void buttonPressed(int button);
@@ -77,9 +78,9 @@ public:
 
 	GAMEPAD_TYPE type;
 
-protected:
 	void axisChanged(int axis, int value);
 	void buttonChanged(int button, bool value);
+protected:
 	void setNumAxis(int amount);
 	void setNumButtons(int amount);
 	void setName(string name);

@@ -5,10 +5,18 @@ int ofxGamepad::curID=0;
 ofxGamepad::ofxGamepad():id(curID),axisMinVal(-32768),axisMaxVal(32767),isDisabled(false)
 {
 	curID++;
+
+	reset();
 }
 
 ofxGamepad::~ofxGamepad()
 {
+}
+
+void ofxGamepad::reset() {
+    for (int b = 0 ; b < buttonValues.size() ; b++) {
+	buttonValues[b] = false;
+    }
 }
 
 void ofxGamepad::axisChanged(int axis, int value)
@@ -36,6 +44,7 @@ void ofxGamepad::buttonPressed(int button)
 	evt.gamepad=this;
 	evt.button=button;
 	evt.value=1;
+	ofLog(OF_LOG_VERBOSE) << "button press " << button;
 	ofNotifyEvent(onButtonPressed, evt);
 }
 

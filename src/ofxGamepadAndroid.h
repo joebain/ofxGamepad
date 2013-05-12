@@ -11,11 +11,15 @@ class ofxGamepadAndroid : public ofxGamepad
 {
 
 public:
-	ofxGamepadAndroid();
+	int deviceId;
+
+
+	ofxGamepadAndroid(int deviceId);
 	~ofxGamepadAndroid();
 	void update();
 	void exit();
 private:
+
 };
 
 #endif //TARGET ANDROID

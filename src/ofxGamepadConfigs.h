@@ -6,7 +6,8 @@
 enum GAMEPAD_TYPE{
 	GAMEPAD_UNKNOWN,
 	GAMEPAD_PS3,
-	GAMEPAD_XBOX
+	GAMEPAD_XBOX,
+	GAMEPAD_OUYA
 };
 
 enum PS3_CONFIG {
@@ -34,6 +35,7 @@ enum PS3_CONFIG {
     PS3_DIR_DOWN = 6
 };
 
+#ifdef USE_OIS
 #define XBOX_NAME "Microsoft Wireless 360 Controller"
 
 enum XBOX_CONFIG {
@@ -58,6 +60,59 @@ enum XBOX_CONFIG {
     XB_DIR_DOWN = 1,
     XB_DIR_LEFT = 2,
     XB_DIR_RIGHT = 3
+};
+
+#elif defined(TARGET_LINUX)
+#define XBOX_NAME "Microsoft X-Box 360 pad"
+
+enum XBOX_CONFIG {
+    XB_STICK_L_X = 0,
+    XB_STICK_L_Y = 1,
+    XB_STICK_R_X = 6,
+    XB_STICK_R_Y = 7,
+    XB_STICK_LT = 4,
+    XB_STICK_RT = 5,
+    XB_BTN_A = 0,
+    XB_BTN_B = 1,
+    XB_BTN_X = 2,
+    XB_BTN_Y = 3,
+    XB_BTN_BACK = 6,
+    XB_BTN_START = 7,
+    XB_BTN_LOGO = 8,
+    XB_BTN_LB = 4,
+    XB_BTN_RB = 5,
+    XB_BTN_STICK_L = 9,
+    XB_BTN_STICK_R = 10,
+    XB_DIR_X = 2,
+    XB_DIR_Y = 3
+};
+
+#endif
+
+#define OUYA_NAME "Ouya Wireless Controller"
+
+enum OUYA_CONFIG {
+//    OUYA_STICK_L_X = 2,
+//    OUYA_STICK_L_Y = 3,
+//    OUYA_STICK_R_X = 4,
+//    OUYA_STICK_R_Y = 5,
+//    OUYA_STICK_LT = 0,
+//    OUYA_STICK_RT = 1,
+    OUYA_BTN_O = 96,
+    OUYA_BTN_U = 99,
+    OUYA_BTN_Y = 100,
+    OUYA_BTN_A = 97,
+//    OUYA_BTN_LOGO = 10, logo is always home i think
+    OUYA_BTN_LB = 102,
+    OUYA_BTN_RB = 103,
+    OUYA_BTN_LT = 104,
+    OUYA_BTN_RT = 105,
+    OUYA_BTN_STICK_L = 106,
+    OUYA_BTN_STICK_R = 107,
+    OUYA_DIR_UP = 19,
+    OUYA_DIR_DOWN = 20,
+    OUYA_DIR_LEFT = 21,
+    OUYA_DIR_RIGHT = 22
 };
 
 #endif

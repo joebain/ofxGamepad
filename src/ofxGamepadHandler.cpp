@@ -20,6 +20,9 @@ bool ofxGamepadHandler::hasSingleton = false;
 ofxGamepadHandler::ofxGamepadHandler():hasHotplug(false),hotplugNext(0) {
 	ofAddListener(ofEvents().update, this, &ofxGamepadHandler::update);
 	ofAddListener(ofEvents().exit, this, &ofxGamepadHandler::exit);
+	ofAddListener(onGamepadPlug, this, &ofxGamepadHandler::onPlug);
+	ofAddListener(onGamepadUnplug, this, &ofxGamepadHandler::onUnplug);
+
 	updatePadList();
 	gamepads.insert(gamepads.end(), gamepadsNew.begin(), gamepadsNew.end());
 	gamepadsNew.clear();
@@ -140,13 +143,13 @@ void ofxGamepadHandler::update(ofEventArgs &args) {
 }
 
 void ofxGamepadHandler::update() {
-	lock();
+//        lock();
 	gamepadList::iterator it=gamepads.begin();
 	while(it!=gamepads.end()) {
 		(*it)->update();
 		++it;
 	}
-	unlock();
+//        unlock();
 }
 
 void ofxGamepadHandler::draw(int x, int y) {
@@ -171,6 +174,42 @@ void ofxGamepadHandler::exit(ofEventArgs& arg) {
 		++it;
 	}
 	delete this;
+}
+
+void ofxGamepadHandler::onPlug(ofxGamepadEvent &ev) {
+    ofLog(OF_LOG_VERBOSE) << "game pad plugged!!";
+}
+
+void ofxGamepadHandler::onUnplug(ofxGamepadEvent &ev) {
+    ofLog(OF_LOG_VERBOSE) << "game pad unplugged!!";
+}
+
+ofxGamepad* ofxGamepadHandler::getGamepadById(int id) {
+//    ofLog(OF_LOG_VERBOSE) << "getGamepadById " << id;
+    for (int i = 0 ; i < gamepads.size() ; i++) {
+#if defined(TARGET_ANDROID)
+	if (gamepads[i]->id == id || ((ofxGamepadAndroid*)(gamepads[i].get()))->deviceId == id) {
+//            ofLog(OF_LOG_VERBOSE) << "returning a pad";
+	    return gamepads[i].get();
+	}
+#else
+	if (gamepads[i]->id == id) {
+//            ofLog(OF_LOG_VERBOSE) << "returning a pad";
+	    return gamepads[i].get();
+	}
+#endif
+    }
+    // couldn't find the pad
+#if defined(TARGET_ANDROID)
+//    ofLog(OF_LOG_VERBOSE) << "making a new android pad";
+    ofPtr<ofxGamepad> gpPtr(new ofxGamepadAndroid(id));
+		lock();
+		gamepads.push_back(gpPtr);
+		unlock();
+    return gpPtr.get();
+#else
+    return NULL;
+#endif
 }
 
 ofxGamepad* ofxGamepadHandler::getGamepad(int num) {

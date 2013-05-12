@@ -44,10 +44,14 @@ public:
 	ofEvent<ofxGamepadEvent> onGamepadUnplug;
 
 	void threadedFunction();
+	ofxGamepad* getGamepadById(int id);
 
 private:
 	void exit(ofEventArgs &arg);
 	ofxGamepadHandler();
+
+	void onPlug(ofxGamepadEvent &ev);
+	void onUnplug(ofxGamepadEvent &ev);
 
 	gamepadList gamepads;
 	gamepadList gamepadsNew;
