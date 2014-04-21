@@ -80,6 +80,7 @@ public:
 
 	void axisChanged(int axis, int value);
 	void buttonChanged(int button, bool value);
+	bool isActive();
 protected:
 	void setNumAxis(int amount);
 	void setNumButtons(int amount);
@@ -93,6 +94,7 @@ private:
 	static int curID;
 	int numAxis;
 	int numButtons;
+	bool active;
 	std::vector<bool> buttonValues;
 	std::vector<float> axisValues;
 	std::map<int, ofxGamepadThreshold> axisThreshold;

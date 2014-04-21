@@ -125,8 +125,27 @@ void ofxGamepadHandler::updatePadList() {
 		file.open("/dev/input/js"+ofToString(i));
 		if(file.exists() && find(activeIDs.begin(), activeIDs.end(), i) == activeIDs.end()) {
 			try {
-				gamepadsNew.push_back(ofPtr<ofxGamepad>(new ofxGamepadLinux(file.getAbsolutePath())));
-				activeIDs.push_back(i);
+			    	ofxGamepadLinux *pad = new ofxGamepadLinux(file.getAbsolutePath());
+				char *name = NULL;
+				int n = 0;
+				bool found_name = false;
+				do {
+				    name = KNOWN_CONTROLLER_NAMES[n++]; 
+				    if (name == NULL) {
+					break;
+				    }
+				    if (pad->name.compare(name) == 0) {
+					found_name = true;
+				    }
+				} while (!found_name);
+				if (found_name) {
+				    activeIDs.push_back(i);
+				    gamepadsNew.push_back(ofPtr<ofxGamepad>(pad));
+//                                if (pad->getNumAxis() < 10 && pad->getNumButtons() < 20) {
+//                                    gamepadsNew.push_back(ofPtr<ofxGamepad>(pad));
+				} else {
+//                                    ofLog(OF_LOG_ERROR) << "Unknown gamepad: " << pad->name;
+				}
 			} catch(std::exception& err) {
 				ofLog(OF_LOG_ERROR, "could not create new gamepad");
 			}

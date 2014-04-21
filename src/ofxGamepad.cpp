@@ -17,6 +17,11 @@ void ofxGamepad::reset() {
     for (int b = 0 ; b < buttonValues.size() ; b++) {
 	buttonValues[b] = false;
     }
+    active = false;
+}
+
+bool ofxGamepad::isActive() {
+    return active;
 }
 
 void ofxGamepad::axisChanged(int axis, int value)
@@ -29,6 +34,9 @@ void ofxGamepad::axisChanged(int axis, int value)
 	evt.gamepad=this;
 	evt.axis=axis;
 	evt.value=axisValues[axis];
+//        if (axis < 25) {
+//            ofLog(OF_LOG_VERBOSE) << "axis change " << axis << ":" << value;
+//        }
 	ofNotifyEvent(onAxisChanged, evt);
 }
 
@@ -44,8 +52,9 @@ void ofxGamepad::buttonPressed(int button)
 	evt.gamepad=this;
 	evt.button=button;
 	evt.value=1;
-	ofLog(OF_LOG_VERBOSE) << "button press " << button;
+//        ofLog(OF_LOG_VERBOSE) << "button press " << button;
 	ofNotifyEvent(onButtonPressed, evt);
+	active = true;
 }
 
 void ofxGamepad::buttonReleased(int button)
@@ -158,6 +167,8 @@ void ofxGamepad::setName(string n)
 		type = GAMEPAD_PS3;
 	} else if(name==XBOX_NAME) {
 		type = GAMEPAD_XBOX;
+	} else if(name==XBOX_WIRELESS_NAME) {
+		type = GAMEPAD_XBOX_WIRELESS;
 	} else {
 		type = GAMEPAD_UNKNOWN;
 	}
